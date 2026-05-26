@@ -18,7 +18,7 @@ Celý proces trvá **15–30 minút**.
 
 ## Funguje v ktorých AI agentoch
 
-Skill je v štandardnom Anthropic Agent Skills formáte. Funguje vo všetkých agentoch, ktoré ho podporujú:
+Skill je v markdown formáte kompatibilnom s Anthropic Agent Skills. Najlepšie otestovaný je v **Codexe** a **Claude Code**. Mnoho ďalších agentov ho tiež dokáže načítať, ale presné správanie sa môže medzi nimi líšiť:
 
 - Codex
 - Claude Code
