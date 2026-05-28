@@ -42,7 +42,7 @@ Otvor si Codex, Claude Code alebo iný AI agent a povedz mu:
 Nainštaluj mi skill z bladerik/skill-majster-biznisu a spusti ho.
 ```
 
-Agent sa pozrie na toto GitHub repo, stiahne SKILL.md, uloží ho do svojho priečinka so skillmi a spustí.
+Agent sa pozrie na toto GitHub repo, stiahne celý skill vrátane `SKILL.md` a `references/`, uloží ho do svojho priečinka so skillmi a spustí.
 
 To je všetko.
 
@@ -62,11 +62,11 @@ npx -y skills add bladerik/skill-majster-biznisu --agent claude -g -y --copy
 
 ### Manuálne
 
-Skopíruj obsah [SKILL.md](./SKILL.md) do svojho lokálneho priečinka so skillmi:
+Skopíruj celý priečinok tohto skillu, nielen samotný `SKILL.md`, pretože skill používa aj súbory v `references/`.
 
-- Codex: `~/.codex/skills/majster-biznisu-skill-builder/SKILL.md`
-- Claude Code: `~/.claude/skills/majster-biznisu-skill-builder/SKILL.md`
-- Cursor: `~/.cursor/skills/majster-biznisu-skill-builder/SKILL.md`
+- Codex: `~/.codex/skills/majster-biznisu-skill-builder/`
+- Claude Code: `~/.claude/skills/majster-biznisu-skill-builder/`
+- Cursor: `~/.cursor/skills/majster-biznisu-skill-builder/`
 - iné: pozri dokumentáciu tvojho agenta
 
 ## Po inštalácii
