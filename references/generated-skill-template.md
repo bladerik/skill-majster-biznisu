@@ -150,6 +150,20 @@ Ak chýba [critical input], spýtaj sa skôr, než budeš pokračovať.
 - nemaž, neplať, nepublikuj a nemeň systémy bez schválenia
 - nevymýšľaj fakty, ceny, právne/finančné rady ani garancie
 
+## Prevádzkové limity
+
+<!-- Include ONLY if the skill itself executes external, irreversible, looping or
+cost-incurring actions (sending, publishing, deleting, payments, scheduling, paid
+API generation in a loop). OMIT completely for text-only skills that only draft,
+summarize, classify or recommend for human approval. -->
+
+- Max operácií na jeden beh: [N]
+- Limit nákladov / kreditov: [suma]
+- Time-out: [čas]
+- Dry-run pred ostrým spustením: [áno/nie]
+- Prvý týždeň: manuálne schvaľovanie každého behu
+- Monitoring nákladov a počtu operácií
+
 ## Výstup
 
 Výstup má byť [short description].

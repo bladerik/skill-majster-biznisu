@@ -73,18 +73,32 @@ alebo inom AI agentovi s prístupom k súborom.
 
 ## Welcome
 
-After pre-flight passes, start directly:
+After pre-flight passes, greet and choose the mode BEFORE the first real question:
 
 ```text
 Ahoj. Postavím ti tvoj AI skill ako bonus k Majster Biznisu.
 
-Prevediem ťa otázkami. Pri každej dostaneš možnosti, aby si nad tým nemusel/a zložito premýšľať.
-Ak ti žiadna možnosť nesedí, vyber najbližšiu a doplň vlastnými slovami, alebo zvoľ "Vlastná odpoveď".
+Predtým než začneme: v akom režime chceš ísť?
 
-Prvá otázka:
+A. Zrýchlený
+   Spýtam sa len 2-3 najdôležitejšie veci, zvyšok si rozumne domyslím
+   a hneď ti ukážem hotový skill. Je to rýchle. Ale niečo si môžem domyslieť
+   nesprávne, takže ti po vygenerovaní poviem, čo som predpokladal, a doladíme to.
+
+B. Štandardný (odporúčam pri prvom skille)
+   Prevediem ťa otázkami krok po kroku. Trvá to dlhšie, ale prvá verzia
+   bude presnejšia a menej sa bude dolaďovať.
+
+Vyber A alebo B.
+```
+
+Store the answer as `mode = fast` or `mode = standard`. Then ask the first real question:
+
+```text
+Pri každej otázke dostaneš možnosti, aby si nad tým nemusel/a zložito premýšľať.
+Ak ti žiadna nesedí, vyber najbližšiu a doplň vlastnými slovami, alebo "Vlastná odpoveď".
+
 Aký typ skillu chceš postaviť?
-
-Vyber jednu možnosť, alebo napíš vlastnú:
 
 1. Skill, ktorý z dopytu pripraví cenovú ponuku alebo kalkuláciu (stavby, elektro, výroba, služby)
 2. Skill, ktorý pripravuje odpovede klientom, leadom alebo follow-upy (reality, predaj, servis)
@@ -94,6 +108,33 @@ Vyber jednu možnosť, alebo napíš vlastnú:
 ```
 
 Do not ask a separate "pripravený?" question.
+
+## Režimy
+
+**Štandardný (`mode = standard`):** prejdi celý Workflow s guided otázkami (jedna
+po druhej) cez Step 1-3, potom generuj.
+
+**Zrýchlený (`mode = fast`):** spýtaj sa len to, bez čoho sa skill nedá bezpečne a
+zmysluplne postaviť, spravidla 2-3 otázky (typ/cieľ, hlavný vstup a výstup,
+prípadne najkritickejší krok). Zvyšok (kroky, kontext, formát) rozumne odvoď.
+Potom hneď generuj.
+
+Zrýchlený režim NIKDY neoslabuje bezpečnosť:
+
+- vždy nasaď bezpečné default hranice (len draft, schválenie pred odoslaním,
+  publikovaním, mazaním, platbou, zmenou externých systémov)
+- nikdy si nedomýšľaj rizikové oprávnenia smerom von
+- po vygenerovaní VŽDY explicitne vypíš, čo si domyslel, nech to vie používateľ
+  opraviť:
+
+```text
+Toto som si domyslel (oprav, ak niečo nesedí):
+- Kroky: ...
+- Formát výstupu: ...
+- Hranice: ...
+```
+
+Zrýchlený režim je aj ideálny pre živú ukážku na pódiu.
 
 ## Workflow
 
@@ -175,6 +216,22 @@ Ask guided safety questions from `references/guided-questions.md` when the bound
 
 Warn about prompt injection if the skill reads external emails, PDFs, web pages, pasted client text, or other untrusted inputs.
 
+#### Operational limits (only for action-taking skills)
+
+This applies ONLY when the generated skill will ITSELF execute external,
+irreversible, looping, or cost-incurring actions: sending, publishing, deleting,
+payments, scheduling, or calling a paid API in a loop (image/video/text
+generation). For these, the generated skill MUST include a `Prevádzkové limity`
+block: max operations per run, budget/credit cap, time-out, dry-run mode, first
+week manual approval, cost monitoring. This prevents a runaway loop (for example
+a bug that fires 10 000 generations and drains the account).
+
+Be smart about this. Do NOT add operational limits to a text-only skill that
+only drafts, summarizes, classifies, analyzes, or recommends for human approval.
+There they are noise and violate the lean principle. The trigger is real
+autonomous action, not the topic. If unsure whether the skill acts on its own,
+ask one guided question before deciding.
+
 ### Step 4 - Generate the Skill
 
 Before generating, read `references/generated-skill-template.md`.
@@ -189,6 +246,7 @@ Use that reference to produce a complete `SKILL.md` that includes the right best
 - `Príklady` when provided
 - `Časté chyby a okrajové prípady` when relevant
 - `Bezpečnostné hranice`
+- `Prevádzkové limity` ONLY if the skill executes external/looping/cost actions (not for text-only draft skills)
 - `Výstup` and concrete output template when useful
 - `Kontrola pred odovzdaním`
 - `Experimentálny režim` only if `experimental_mode = true`
